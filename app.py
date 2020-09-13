@@ -88,6 +88,7 @@ def comment():
         else:
             new_text = request.form['text']
             comments.update_one({'id': request.form['id']},{'text': new_text} )
+    com = comments.find()
     response = []
     for c in comments:
         c['_id'] = str(c['_id'])
