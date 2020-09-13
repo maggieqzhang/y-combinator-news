@@ -5,3 +5,4 @@ flask_pymongo
 dnspython
 pymongo[srv]
 flask_bcrypt
+gunicorn
