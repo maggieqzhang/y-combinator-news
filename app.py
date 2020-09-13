@@ -88,7 +88,12 @@ def comment():
         else:
             new_text = request.form['text']
             comments.update_one({'id': request.form['id']},{'text': new_text} )
-    return json_util.dumps(comments)
+    response = []
+    for c in comments:
+        c['_id'] = str(c['_id'])
+        response.append(c)
+    return json.dumps(response)
+
 
 @app.route('/logout',methods=['GET'])
 @checkLoggedIn()
