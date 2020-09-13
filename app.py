@@ -88,7 +88,7 @@ def comment():
         else:
             new_text = request.form['text']
             comments.update_one({'id': request.form['id']},{'text': new_text} )
-    return jsonify(comments)
+    return json_util.dumps(comments)
 
 @app.route('/logout',methods=['GET'])
 @checkLoggedIn()
