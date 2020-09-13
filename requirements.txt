@@ -1,0 +1,7 @@
+Fabric
+WTForms
+coverage
+flask_pymongo
+dnspython
+pymongo[srv]
+flask_bcrypt
