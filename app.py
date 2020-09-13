@@ -90,7 +90,7 @@ def comment():
             comments.update_one({'id': request.form['id']},{'text': new_text} )
     com = comments.find()
     response = []
-    for c in comments:
+    for c in com:
         c['_id'] = str(c['_id'])
         response.append(c)
     return json.dumps(response)
