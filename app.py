@@ -61,13 +61,13 @@ def signup():
             session['username'] = request.form['username']
             return jsonify({'status' : 'registration successful'})
         return jsonify({'status' : 'username already exists'})
-    return jsonify(mongo.db.users.prettyprint())#jsonify({ 'status': 'load registration page' })
+    return jsonify({ 'status': 'load registration page' })
 
 @app.route('/submit', methods = ["POST", "GET"])
 @checkLoggedIn()
 def submit():
-    if 'username' in session:
-        if request.method == "POST":
+    if request.method == "POST":
+        if 'username' in session:
             text = request.form['text']
             author = session['username']
             url = request.form['url']
@@ -75,8 +75,8 @@ def submit():
             comment_id = request.form['id']
             mongo.db.comments.insert({'id': comment_id, 'author': author, 'name':name, 'url': url, 'text': text })
             return jsonify({'status': 'your comment has been recorded'})
-        return jsonify({ 'status': 'load comment submission page' })
-    return jsonify({'status': 'you must be logged in to view this page'})
+        return jsonify({'status': 'you must login to submit'})
+    return jsonify({'status': 'load comment submit page'})
 
 @app.route('/comments', methods = ["GET", "POST"])
 def comment():
@@ -87,13 +87,14 @@ def comment():
             return jsonify({'status': 'comment'  + str(request.form['id']) +  " successfully deleted"})
         else:
             new_text = request.form['text']
-            comments.update_one({'id': request.form['id']},{'text': new_text} )
+            comments.update_one({'id': request.form['id']},{'$set':{'text': new_text} })
+            return jsonify({'status': 'your comment was updated'})
     com = comments.find()
     response = []
     for c in com:
         c['_id'] = str(c['_id'])
         response.append(c)
-    return json.dumps(response)
+    return jsonify(response)
 
 
 @app.route('/logout',methods=['GET'])
