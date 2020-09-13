@@ -6,3 +6,8 @@ dnspython
 pymongo[srv]
 flask_bcrypt
 gunicorn
+Flask-SQLAlchemy
+Flask-WTF
+# ecdsa
+# paramiko
+# pycrypto
